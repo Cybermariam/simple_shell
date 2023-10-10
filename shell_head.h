@@ -9,8 +9,9 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
+void en_print(char *string, int desc);
+void en_prompt(void);
 int main(int ac, char **av);
-int main(int ac, char **av, char **env);
 char *_getenv(const char *name);
 int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
