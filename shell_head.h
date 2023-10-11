@@ -11,9 +11,10 @@
 
 void en_print(char *string, int desc);
 void en_prompt(void);
-int main(int ac, char **av);
+int main(void);
+void en_input(char *buff, size_t size);
 char *_getenv(const char *name);
 int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
 
-#endif
+#endif /*SHELL_HEAD_H*/
