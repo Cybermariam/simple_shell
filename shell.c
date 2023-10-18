@@ -8,7 +8,7 @@
  */
 int main(int argc, char **env)
 {
-	int status, n; 
+	int status = 0, n; 
 	char *en_token;
 	char *buffer = NULL;
 	char *arg[256], *delim = " ";
@@ -21,22 +21,31 @@ int main(int argc, char **env)
 			en_prompt();
 		if (getline(&buffer, &size, stdin) == -1)
 		{
-			free(buffer);
-			break;
+			if (feof(stdin))
+			{
+				_putchar('\n');
+				exit(EXIT_SUCCESS);
+			}
+			else
+			{
+				perror("getline");
+				exit(EXIT_FAILURE);
+			}
 		}
 		n = 0;
 		en_token = strtok(buffer, delim); 
 		while (en_token && n < 256)
 		{
-			arg[n] = en_token;
-			n++;
+			arg[n++] = en_token;
 			en_token = strtok(NULL, delim);
 		}
-		arg[n] = NULL;
+		if (arg[0] == NULL)
+		{
+			free(buffer);
+			continue;
+		}
 		en_fork(arg, env, &status);
-		
-	free(buffer);
+		free(buffer);
 	}
-
 	return (0);
 }

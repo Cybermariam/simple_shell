@@ -8,6 +8,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <stdbool.h>
+#include <stddef.h>
 
 int en_printStr(char *my_str);
 int main(int argc, char **env);

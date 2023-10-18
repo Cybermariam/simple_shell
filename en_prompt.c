@@ -5,5 +5,6 @@
  */
 void en_prompt(void)
 {
-	printf("my_shell$$ ");
+	en_printStr("my_shell$$ ");
+	en_printStr("\n");
 }
