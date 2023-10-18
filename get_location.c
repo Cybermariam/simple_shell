@@ -1,4 +1,5 @@
 #include "shell_head.h"
+#include <string.h>
 
 /**
  * en_location - search for an executable file within a list of directories
@@ -14,12 +15,13 @@ char *en_location(char *pth, char *argv)
 	path_copy = strdup(pth);
 	path_token = strtok(path_copy, delim);
 	en_filePath = malloc(strlen(argv) + strlen(path_token) + 2);
-	while (path_token == NULL)
+	en_filePath[0] = '\0';
+
+	while (path_token != NULL)
 	{
 		strcpy(en_filePath, path_token);
 		strcat(en_filePath, "/");
-		strcat(en_filePath, "argv");
-		strcat(en_filePath, "\0");
+		strcat(en_filePath, argv);
 
 		if (access(en_filePath, X_OK) == 0)
 		{
@@ -47,7 +49,7 @@ char *get_location(char *argv)
 	if (en_path)
 	{
 		en_path = en_location(en_path, argv);
-		return (en_path);
+			return (en_path);
 	}
 	return (NULL);
 }

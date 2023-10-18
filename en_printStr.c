@@ -18,15 +18,9 @@ int _putchar(char c)
 int en_printStr(char *my_str)
 {
 	int m;
-	int counter;
+	int counter = 0;
 
-	counter = 0;
-	m = 0;
-	while (my_str[m] != '\0')
-	{
-		_putchar(my_str[m]);
-		counter++;
-		m++;
-	}
+	for (m = 0; my_str[m]; m++)	
+		counter += _putchar(my_str[m]);
 	return (counter);
 }

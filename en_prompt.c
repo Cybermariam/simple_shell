@@ -6,5 +6,4 @@
 void en_prompt(void)
 {
 	en_printStr("my_shell$$ ");
-	en_printStr("\n");
 }

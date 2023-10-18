@@ -2,50 +2,58 @@
 
 /**
  * main - Entry point
- * @argc: is the argument count
+ * @argc: is the argument counti
  * @env: is an array of strings
  * Return: Always 0 Success
  */
 int main(int argc, char **env)
 {
-	int status = 0, n; 
-	char *en_token;
-	char *buffer = NULL;
-	char *arg[256], *delim = " ";
+	int status, m, n;
+	ssize_t numOfChar;
+	char *prompt = "(my_shell)$ ", *buffer = NULL, *path;
+	char *arg[128], *delim = " \n";
 	size_t size = 0;
 	(void)argc;
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO) == 1)
-			en_prompt();
-		if (getline(&buffer, &size, stdin) == -1)
+			en_printStr(prompt);
+		numOfChar = getline(&buffer, &size, stdin);
+		if (numOfChar == -1)
 		{
-			if (feof(stdin))
-			{
-				_putchar('\n');
-				exit(EXIT_SUCCESS);
-			}
-			else
-			{
-				perror("getline");
-				exit(EXIT_FAILURE);
-			}
+			en_printStr("exiting\n");
+			return (-1);
+			/*free(buffer);
+			exit(0);*/
+		}
+
+		m = 0;
+		while (buffer[m])
+		{
+			if (buffer[m] == '\n')
+				buffer[m] = 0;
+			m++;
 		}
 		n = 0;
-		en_token = strtok(buffer, delim); 
-		while (en_token && n < 256)
+		arg[n] = strtok(buffer, delim);
+		while (arg[n])
 		{
-			arg[n++] = en_token;
-			en_token = strtok(NULL, delim);
+			arg[++n] = strtok(NULL, delim);
 		}
-		if (arg[0] == NULL)
+		arg[n] = NULL;
+		path = get_location(arg[0]);
+		if (path == NULL)
 		{
-			free(buffer);
+			if (en_builtIn(arg) != 0)
+				continue;
+			else
+				en_printStr("command not found\n");
 			continue;
 		}
 		en_fork(arg, env, &status);
-		free(buffer);
 	}
+		free(buffer);
+		free(path);
 	return (0);
 }

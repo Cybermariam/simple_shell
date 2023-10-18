@@ -8,9 +8,9 @@
  */
 void en_fork(char **str, char **env, int *status)
 {
-	char *path;
 	pid_t en_pid;
-	int en_stat;
+	char *path;
+	int en_stat, i;
 
 	en_pid = fork();
 	if (en_pid == -1)
@@ -42,6 +42,9 @@ void en_fork(char **str, char **env, int *status)
 		*status = 2;
 	else
 		*status = 0;
+	for (i = 0; str[i]; i++)
+		en_printStr(str[i]);
+	return;
 	free(path);
 	free(str);
 }
