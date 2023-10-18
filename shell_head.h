@@ -9,12 +9,17 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
-void en_print(char *string, int desc);
+int en_printStr(char *my_str);
+int main(int argc, char **env);
 void en_prompt(void);
-int main(void);
 void en_input(char *buff, size_t size);
 char *_getenv(const char *name);
 int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
+char *en_location(char *pth, char *argv);
+char *get_location(char *argv);
+int _putchar(char c);
+int en_builtIn(char **argv);
+void en_fork(char **str, char **env, int *status);
 
 #endif /*SHELL_HEAD_H*/

@@ -8,9 +8,8 @@
 void en_input(char *buff, size_t size)
 {
 	ssize_t num_input;
-	
-	num_input = getline(&buff, &size, stdin);
 
+	num_input = getline(&buff, &size, stdin);
 	if (num_input == -1)
 	{
 		if (feof(stdin))
