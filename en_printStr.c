@@ -11,7 +11,7 @@ int _putchar(char c)
 }
 
 /**
- * en_printStr - function that print a string
+ * en_printStr - print a string
  * @my_str: the string to print
  * Return: the string count
  */
