@@ -20,7 +20,7 @@ int en_printStr(char *my_str)
 	int m;
 	int counter = 0;
 
-	for (m = 0; my_str[m]; m++)	
+	for (m = 0; my_str[m]; m++)
 		counter += _putchar(my_str[m]);
 	return (counter);
 }

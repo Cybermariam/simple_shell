@@ -8,10 +8,11 @@
  */
 int main(int argc, char **env)
 {
-	int status, m, n;
+	int status, m, n, value;
 	ssize_t numOfChar;
 	char *prompt = "(my_shell)$ ", *buffer = NULL, *path;
 	char *arg[128], *delim = " \n";
+	pid_t en_pid;
 	size_t size = 0;
 	(void)argc;
 
@@ -22,12 +23,9 @@ int main(int argc, char **env)
 		numOfChar = getline(&buffer, &size, stdin);
 		if (numOfChar == -1)
 		{
-			en_printStr("exiting\n");
-			return (-1);
-			/*free(buffer);
-			exit(0);*/
+			free(buffer);
+			exit(0);
 		}
-
 		m = 0;
 		while (buffer[m])
 		{
@@ -51,7 +49,21 @@ int main(int argc, char **env)
 				en_printStr("command not found\n");
 			continue;
 		}
-		en_fork(arg, env, &status);
+		en_pid = fork();
+		if (en_pid < 0)
+		{
+			en_printStr("Fork Failure");
+			free(buffer);
+			exit(0);
+		}
+		else if (en_pid == 0)
+		{
+			value = execve(path, arg, env);
+			if (value == -1)
+				en_printStr("command does not exist\n");
+		}
+		else
+			wait(&status);
 	}
 		free(buffer);
 		free(path);
